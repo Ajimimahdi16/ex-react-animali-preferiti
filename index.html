@@ -4,12 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei animali Preferiti</title>
+    <link rel="stylesheer" href="style.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 
 
 
 <body>
-    <body>
+    <div class="lista-animali"></div>
+      
+<script type="text/babel">
+
+    // Destrutturiamo useState da React 
+    const { useState } = React;
+
+    // Array 
+    const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
+
+    const ComponenteAnimali = () => {
+
+        const [animals, setAnimals] = useState([]);
+
+        const aggiungiAnimaleCasuale = () => {
+            const indiceCasuale = Math.floor(Math.random() * animalsChoices.length);
+            const animaleScelto = animalsChoices[indiceCasuale];
+            setAnimals(prevAnimals => [...prevAnimals, animaleScelto]);
+        };
+
+        return (
+            // 1. Abbiamo aggiunto il Fragment <> per avvolgere tutto in un unico elemento padre
+            <>
+                {/* 2. Corretto il tag di chiusura del bottone in </button> */}
+                <button onClick={aggiungiAnimaleCasuale}>
+                    Aggiungi Animale
+                </button>
+                
+                <details>
+                    <summary>
+                        Animali
+                    </summary>
+                    <ul>
+                        {animals.map((animale, index) => (
+                            <li key={index}>{animale}</li>
+                        ))}
+                    </ul>
+                </details>
+            </> 
+        );
+    };
+
+    const targetContainer = document.querySelector('.lista-animali');
+    const root = ReactDOM.createRoot(targetContainer);
+    root.render(<ComponenteAnimali />);
+</script>
+      
+   
     <header>
       <h1>I miei animali Preferiti</h1>
     </header>
